@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Audit System 1404 V12.3</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:tahoma;background:#f3f4f6;padding:20px}
+.card{background:white;padding:20px;border-radius:12px;margin:15px 0}
+button{width:100%;padding:12px;margin-top:10px;background:#1f2937;color:white;border:0;border-radius:8px}
+input{width:100%;padding:10px}
+</style>
+</head>
+<body>
+<div class="card"><h2>سامانه حسابرسی 1404 - V12.3</h2></div>
+<div class="card">
+<input id="f" type="file">
+<button onclick="load()">بارگذاری فایل</button>
+<div id="m"></div>
+</div>
+<div class="card">
+<button onclick="excel()">دریافت Excel</button>
+</div>
+<script>
+function load(){
+let x=document.getElementById('f').files[0];
+if(x) document.getElementById('m').innerHTML='فایل آماده شد: '+x.name;
+}
+function excel(){
+let data='کاربرگ اصلی,سال 1404,سال مقایسه ای 1403\nکاربرگ فرعی,,\nسندرسی,,';
+let blob=new Blob(['\ufeff'+data],{type:'text/csv;charset=utf-8'});
+let a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='Audit_Workpaper_1404.csv';
+a.click();
+}
+</script>
+</body>
+</html>
