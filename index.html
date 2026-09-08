@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سامانه حسابرسی 1404 - V12.2</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<style>
+body{font-family:tahoma;background:#f3f4f6;padding:20px}.card{background:#fff;border-radius:14px;padding:20px;margin:15px 0;box-shadow:0 2px 8px #ccc}button{padding:12px;border:0;border-radius:8px;background:#1f2937;color:#fff;width:100%;margin-top:10px}input,select{width:100%;padding:10px;margin:8px 0}.ok{background:#86efac;padding:10px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="card"><h2>سامانه حسابرسی 1404 - V12.2</h2></div>
+<div class="card">
+<h3>پرونده جاری</h3>
+<select><option>دستگاه اجرایی</option><option>شرکت دولتی</option></select>
+<input placeholder="نام دستگاه / شرکت">
+<input value="سال مالی: 1404" readonly>
+<input value="سال مقایسه ای: 1403" readonly>
+</div>
+<div class="card">
+<h3>ورودی فایل</h3>
+<input id="file" type="file">
+<button onclick="loadFile()">بارگذاری فایل</button>
+<div id="msg"></div>
+</div>
+<div class="card">
+<h3>خروجی</h3>
+<button onclick="makeExcel()">تولید خروجی Excel</button>
+</div>
+<script>
+let loaded=false;
+function loadFile(){
+ let f=document.getElementById('file').files[0];
+ if(f){loaded=true;document.getElementById('msg').innerHTML='<div class="ok">فایل آماده پردازش شد: '+f.name+'</div>';}
+}
+function makeExcel(){
+ if(!loaded){alert('ابتدا فایل را بارگذاری کنید');return;}
+ let wb=XLSX.utils.book_new();
+ let ws1=XLSX.utils.aoa_to_sheet([['کاربرگ اصلی','سال 1404','سال مقایسه ای 1403'],['وضعیت','در حال رسیدگی','']]);
+ let ws2=XLSX.utils.aoa_to_sheet([['کاربرگ فرعی'],['شرح','مبلغ','کنترل']]);
+ let ws3=XLSX.utils.aoa_to_sheet([['سندرسی'],['ردیف','شرح','نتیجه']]);
+ XLSX.utils.book_append_sheet(wb,ws1,'کاربرگ اصلی');
+ XLSX.utils.book_append_sheet(wb,ws2,'کاربرگ فرعی');
+ XLSX.utils.book_append_sheet(wb,ws3,'سندرسی');
+ XLSX.writeFile(wb,'Audit_Workpaper_1404.xlsx');
+}
+</script>
+</body>
+</html>
